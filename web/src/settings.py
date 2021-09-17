@@ -1,10 +1,11 @@
 import os
+from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
 
-from .additional_settings.defender_settings import *
+# from .additional_settings.defender_settings import *
 from .additional_settings.swagger_settings import *
-from .additional_settings.cacheops_settings import *
+# from .additional_settings.cacheops_settings import *
 from .additional_settings.logging_settings import *
 from .additional_settings.celery_settings import *
 from .additional_settings.allauth_settings import *
@@ -13,14 +14,14 @@ from .additional_settings.summernote_settings import *
 from .additional_settings.smtp_settings import *
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "hjzjhzl;hjzlhjzhjzhjzkhljzkkothjzodtjhdaipjhopzjzlkbmbmbmznmznmznmzjnzoitjn")
 
 DEBUG = int(os.environ.get("DEBUG", default=1))
-
-ALLOWED_HOSTS: list = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
-
+FRONTEND_SIRE = 'http://localhost:8000'
+X_FRAME_OPTIONS = "SAMESITE"
+ALLOWED_HOSTS: list = os.environ.get("DJANGO_ALLOWED_HOSTS", 'localhost,127.0.0.1').split(",")
 AUTH_USER_MODEL = 'main.User'
 
 SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'test@test.com')
@@ -28,8 +29,6 @@ SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', 'tester26')
 
 MICROSERVICE_TITLE = os.environ.get('MICROSERVICE_TITLE', 'Template')
 GITHUB_URL = os.environ.get('GITHUB_URL', 'https://github.com')
-FRONTEND_SITE = os.environ.get('FRONTEND_SITE', 'http://localhost:8008')
-BACKEND_SITE = os.environ.get('BACKEND_SITE', 'http://localhost:8008')
 
 REDIS_URL = os.environ.get('REDIS_URL')
 
@@ -37,12 +36,12 @@ USE_HTTPS = int(os.environ.get('USE_HTTPS', 0))
 ENABLE_SENTRY = int(os.environ.get('ENABLE_SENTRY', 0))
 ENABLE_SILK = int(os.environ.get('ENABLE_SILK', 0))
 ENABLE_DEBUG_TOOLBAR = int(os.environ.get('ENABLE_DEBUG_TOOLBAR', 0))
-ENABLE_RENDERING = int(os.environ.get('ENABLE_RENDERING', 0))
+ENABLE_RENDERING = int(os.environ.get('ENABLE_RENDERING', 1))
 
 INTERNAL_IPS = []
 
 ADMIN_URL = os.environ.get('ADMIN_URL', 'admin')
-ADMIN_EMAILS = os.environ.get('ADMIN_EMAILS', '').split(',')
+
 SWAGGER_URL = os.environ.get('SWAGGER_URL')
 
 API_KEY_HEADER = os.environ.get('API_KEY_HEADER')
@@ -52,12 +51,11 @@ HEALTH_CHECK_URL = os.environ.get('HEALTH_CHECK_URL')
 SITE_ID = 1
 
 USER_AVATAR_MAX_SIZE = 4.0
-USER_FILE_MAX_SIZE = 10.0  # Mb
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # b = 10 MB
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = [
+    'user_profile.apps.UserProfileConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,9 +73,6 @@ THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
-    'defender',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
@@ -91,8 +86,6 @@ LOCAL_APPS = [
     'auth_app.apps.AuthAppConfig',
     'blog.apps.BlogConfig',
     'contact_us.apps.ContactUsConfig',
-    'user_profile.apps.UserProfileConfig',
-    'actions.apps.ActionsConfig',
 
 ]
 
@@ -109,7 +102,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'defender.middleware.FailedLoginMiddleware',
+    # 'defender.middleware.FailedLoginMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 
 ]
@@ -119,8 +112,9 @@ REST_FRAMEWORK = {
         'microservice_request.permissions.HasApiKeyOrIsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'main.auth_backend.JWTCookieAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -160,16 +154,12 @@ WSGI_APPLICATION = 'src.wsgi.application'
 ASGI_APPLICATION = 'src.asgi.application'
 
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE"),
-        "NAME": os.environ.get("POSTGRES_DB"),
-        "USER": os.environ.get("POSTGRES_USER"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-        "HOST": os.environ.get("POSTGRES_SOCKET") or os.environ.get('POSTGRES_HOST'),
-        "PORT": os.environ.get("POSTGRES_PORT"),
-        "CONN_MAX_AGE": 0,
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     },
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

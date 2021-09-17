@@ -35,12 +35,12 @@ LOGGING = {
         "default": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "formatter": "verbose" if environ.get('DEBUG') else "json",
+            "formatter": "verbose"
         },
         "django.server": {
             "level": "INFO",
             "class": "logging.StreamHandler",
-            "formatter": "django.server" if environ.get('DEBUG') else "json",
+            "formatter": "django.server"
         },
     },
     "loggers": {

@@ -1,29 +1,17 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from actions.serializers import LikeDislikeRelationSerializer
 from user_profile.serializers import ShortUserSerializer
 from .models import Category, Article, Comment
 from .services import BlogService
-from actions.choices import LikeIconStatus, LikeStatus
 
 
 class ParentCommentSerializer(serializers.ModelSerializer):
     user = ShortUserSerializer()
 
-    like_status = serializers.SerializerMethodField(method_name='get_like_status')
-
-    def get_like_status(self, obj) -> str:
-        user = self.context['request'].user
-        if not user.is_authenticated:
-            return LikeIconStatus.UNDONE
-        if like_obj := obj.votes.filter(user=user).first():
-            return LikeIconStatus.LIKED if like_obj.vote == LikeStatus.LIKE else LikeIconStatus.DISLIKED
-        return LikeIconStatus.UNDONE
-
     class Meta:
         model = Comment
-        fields = ('id', 'author', 'content', 'updated', 'article', 'user', 'like_status')
+        fields = ('id', 'author', 'content', 'updated', 'article', 'user')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -31,19 +19,10 @@ class CommentSerializer(serializers.ModelSerializer):
     child = ParentCommentSerializer(many=True, read_only=True, source='parent_set')
     parent_id = serializers.IntegerField(min_value=1, default=None)
     user = ShortUserSerializer(read_only=True)
-    like_status = serializers.SerializerMethodField(method_name='get_like_status')
-
-    def get_like_status(self, obj) -> str:
-        user = self.context['request'].user
-        if not user.is_authenticated:
-            return LikeIconStatus.UNDONE
-        if like_obj := obj.votes.filter(user=user).first():
-            return LikeIconStatus.LIKED if like_obj.vote == LikeStatus.LIKE else LikeIconStatus.DISLIKED
-        return LikeIconStatus.UNDONE
 
     class Meta:
         model = Comment
-        fields = ('id', 'user', 'author', 'content', 'child', 'updated', 'article', 'parent_id', 'like_status')
+        fields = ('id', 'user', 'author', 'content', 'child', 'updated', 'article', 'parent_id')
 
     def validate(self, data):
         if not self.context.get('request').user.is_authenticated and not data.get('author'):
@@ -91,38 +70,27 @@ class ArticleSerializer(serializers.ModelSerializer):
     author = ShortUserSerializer()
     category = CategorySerializer()
     comments_count = serializers.IntegerField()
-    like_status = serializers.SerializerMethodField(method_name='get_like_status')
-
-    def get_like_status(self, obj) -> str:
-        user = self.context['request'].user
-        if not user.is_authenticated:
-            return LikeIconStatus.UNDONE
-        if like_obj := obj.votes.filter(user=user).first():
-            return LikeIconStatus.LIKED if like_obj.vote == LikeStatus.LIKE else LikeIconStatus.DISLIKED
-        return LikeIconStatus.UNDONE
 
     class Meta:
         model = Article
         fields = (
-            'id', 'title', 'url', 'author', 'category', 'likes', 'dislikes',
-            'created', 'updated', 'comments_count', 'image', 'content', 'like_status'
+            'id', 'title', 'url', 'author', 'category',
+            'created', 'updated', 'comments_count', 'image', 'content'
         )
 
 
 class FullArticleSerializer(ArticleSerializer):
     comments = serializers.SerializerMethodField('get_parent_comment')
-    votes = LikeDislikeRelationSerializer(many=True)
 
     def get_parent_comment(self, obj):
         queryset = obj.comment_set.filter(parent_id__isnull=True)
         return CommentSerializer(queryset, source='comment_set', many=True).data
 
     class Meta(ArticleSerializer.Meta):
-        fields = ArticleSerializer.Meta.fields + ('comments', 'votes')
+        fields = ArticleSerializer.Meta.fields + ('comments',)
 
 
 class CreateArticleSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Article
         fields = ('title', 'category', 'image', 'content')

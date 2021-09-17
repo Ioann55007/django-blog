@@ -70,26 +70,26 @@ services:
       interval: 1m20s
       timeout: 5s
       retries: 3
-  celery:
-    build:
-      context: .
-      dockerfile: docker/dev/web/Dockerfile
-    command: celery -A src worker -l info -Q celery
-    volumes:
-      - ./web/:/usr/src/web/
-      - redis_socket:/redis_socket
-      - postgres_socket:/postgres_socket
-    environment:
-      <<: *variables
-    env_file:
-      - docker/dev/env/.env
-      - docker/dev/env/.db.env
-      - docker/prod/env/.data.env
-    depends_on:
-      - redis
-    restart: unless-stopped
-    networks:
-      - separated_network
+#  celery:
+#    build:
+#      context: .
+#      dockerfile: docker/dev/web/Dockerfile
+#    command: celery -A src worker -l info -Q celery
+#    volumes:
+#      - ./web/:/usr/src/web/
+#      - redis_socket:/redis_socket
+#      - postgres_socket:/postgres_socket
+#    environment:
+#      <<: *variables
+#    env_file:
+#      - docker/dev/env/.env
+#      - docker/dev/env/.db.env
+#      - docker/prod/env/.data.env
+#    depends_on:
+#      - redis
+#    restart: unless-stopped
+#    networks:
+#      - separated_network
 
 
 volumes:

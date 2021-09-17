@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.reverse import reverse_lazy
 from taggit.models import TaggedItemBase, TagBase
 from taggit.managers import TaggableManager
-from actions.models import LikeDislike
 from .choices import ArticleStatus
 
 User = get_user_model()
@@ -53,7 +52,7 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.PositiveSmallIntegerField(choices=ArticleStatus.choices, default=ArticleStatus.INACTIVE)
     image = models.ImageField(upload_to='articles/', blank=True, default='no-image-available.jpg')
-    votes = GenericRelation(LikeDislike, related_query_name='articles')
+
     tags = TaggableManager(through=TaggedArticle, related_name='article_tags', blank=True)
 
     objects = models.Manager()
@@ -99,8 +98,6 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='parent_set', blank=True, null=True)
-    votes = GenericRelation(LikeDislike, related_query_name='comments')
-
     objects = models.Manager()
 
     class Meta:
