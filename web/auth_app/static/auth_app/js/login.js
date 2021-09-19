@@ -3,7 +3,7 @@ $(function () {
   $('#loginForm').submit(login);
   $('#forgotPasswordForm').submit(passwordReset);
 });
-
+console.log('hiar')
 function login(e) {
   let form = $(this);
   e.preventDefault();

@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load blog %}
 {% load static main %}
 {% block title %}Blog Post{% endblock title %}
 
@@ -23,11 +24,13 @@
                 <span class="glyphicon glyphicon-calendar"></span> {{ article.updated | date_time }} |
                 <span class="glyphicon glyphicon-comment"></span><a href="#"> {{ article.comments_count }} Comments</a> |
                 <i class="icon-share"></i><a href="#">39 Shares</a> |
-                <span class="glyphicon glyphicon-tags"></span> Tags: <a href="#">
-                <span class="label label-info">Snipp</span></a> <a href="#">
-                <span class="label label-info">Bootstrap</span></a> <a href="#">
-                <span class="label label-info">UI</span></a> <a href="#">
-                <span class="label label-info">growth</span></a>
+                <span class="glyphicon glyphicon-tags"></span> Tags:
+                {% for tag in article.tags %}
+                   <a href=""><span class="label label-info">{{ tag.name }}</span></a>
+
+                {% endfor %}
+
+
               </div>
             </div>
             <div class="row post-content">

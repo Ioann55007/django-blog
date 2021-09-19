@@ -2,8 +2,15 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from user_profile.serializers import ShortUserSerializer
-from .models import Category, Article, Comment
+from .models import Category, Article, Comment, ArticleTag
 from .services import BlogService
+
+
+class ArticleTagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ArticleTag
+        fields = ('name',)
 
 
 class ParentCommentSerializer(serializers.ModelSerializer):
@@ -70,12 +77,15 @@ class ArticleSerializer(serializers.ModelSerializer):
     author = ShortUserSerializer()
     category = CategorySerializer()
     comments_count = serializers.IntegerField()
+    tags = ArticleTagSerializer(many=True)
+
+
 
     class Meta:
         model = Article
         fields = (
             'id', 'title', 'url', 'author', 'category',
-            'created', 'updated', 'comments_count', 'image', 'content'
+            'created', 'updated', 'comments_count', 'image', 'content', 'tags'
         )
 
 
