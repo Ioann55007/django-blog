@@ -21,7 +21,7 @@ function postCreate(event) {
     },
     error: function (data) {
       $(".help-block").remove()
-      let groups = ['#categoryGroup', '#titleGroup', '#contentGroup', '#posterGroup']
+      let groups = ['#categoryGroup', '#titleGroup', '#contentGroup', '#posterGroup', '#tagGroup']
       for (let group of groups) {
         $(group).removeClass(error_class_name);
       }
@@ -36,6 +36,9 @@ function postCreate(event) {
       }
       if (data.responseJSON.image) {
         help_block("#posterGroup", data.responseJSON.image)
+      }
+      if (data.responseJSON.image) {
+        help_block("#tagGroup", data.responseJSON.tags)
       }
     },
   })

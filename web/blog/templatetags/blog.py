@@ -11,7 +11,3 @@ def categories_list(limit: int = 99):
     queryset = Category.objects.all()[:limit]
     serializer = CategorySerializer(queryset, many=True)
     return serializer.data
-
-
-
-

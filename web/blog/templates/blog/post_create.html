@@ -35,9 +35,24 @@
       <textarea id="summernote" placeholder="Content" class="form-control" name="content" cols="40" rows="3"></textarea>
     </div>
     <hr>
-    <div>
-      <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
-    </div>
+  <div class="form-row field-tags">
+
+<div class="form-row field-tags">
+
+     <div id="tagGroup">
+
+       <label for="tagGroup">Tags:</label>
+
+       <input type="text" name="tags">
+
+        <div class="help">A comma-separated list of tags.</div>
+
+     </div>
+
+</div>
+
+      <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i>Submit</button>
+  </div>
 
   </form>
   {% include 'blog/includes/modal_create_post.html' %}

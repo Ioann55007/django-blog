@@ -4,6 +4,7 @@ from rest_framework import serializers
 from user_profile.serializers import ShortUserSerializer
 from .models import Category, Article, Comment, ArticleTag
 from .services import BlogService
+from .addtags import TagListSerializerField,TaggitSerializer
 
 
 class ArticleTagSerializer(serializers.ModelSerializer):
@@ -79,8 +80,6 @@ class ArticleSerializer(serializers.ModelSerializer):
     comments_count = serializers.IntegerField()
     tags = ArticleTagSerializer(many=True)
 
-
-
     class Meta:
         model = Article
         fields = (
@@ -100,10 +99,14 @@ class FullArticleSerializer(ArticleSerializer):
         fields = ArticleSerializer.Meta.fields + ('comments',)
 
 
-class CreateArticleSerializer(serializers.ModelSerializer):
+class CreateArticleSerializer(TaggitSerializer, serializers.ModelSerializer):
+    tags = TagListSerializerField()
+
     class Meta:
         model = Article
-        fields = ('title', 'category', 'image', 'content')
+        fields = ('title', 'category', 'image', 'content', 'tags')
+
+
 
     def create(self, validated_data):
         validated_data['author'] = self.context.get('request').user

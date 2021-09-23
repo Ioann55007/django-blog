@@ -15,12 +15,20 @@
       </p>
       <hr>
       <p><i class="fa fa-calendar"></i> Posted on {{ created | date_time }}</p>
-      <p><i class="fa fa-tags"></i> Tags:
-        <a href=""><span class="badge badge-info">Bootstrap</span></a>
-        <a href=""><span class="badge badge-info">Web</span></a>
-        <a href=""><span class="badge badge-info">CSS</span></a>
-        <a href=""><span class="badge badge-info">HTML</span></a>
-      </p>
+<!--      <p><i class="fa fa-tags"></i> Tags:-->
+
+<!--        <a href=""><span class="badge badge-info">Bootstrap</span></a>-->
+<!--        <a href=""><span class="badge badge-info">Web</span></a>-->
+<!--        <a href=""><span class="badge badge-info">CSS</span></a>-->
+<!--        <a href=""><span class="badge badge-info">HTML</span></a>-->
+<!--      </p>-->
+
+               <span class="glyphicon glyphicon-tags"></span>Tags:
+                  {% for tag in tags %}
+                   <a href=""><span class="badge badge-info">{{ tag.name }}</span></a>-
+
+                  {% endfor %}
+
 
       <hr>
       <img src="{{ image }}" class="img-responsive" width="700" height="300">
