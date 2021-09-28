@@ -7,6 +7,7 @@ class CharFilter(filters.BaseInFilter, filters.CharFilter):
 
 
 class ArticleFilter(filters.FilterSet):
+
     search = filters.CharFilter(method='search_filter')
 
     def search_filter(self, queryset, name, value):

@@ -4,7 +4,7 @@ from rest_framework import serializers
 from user_profile.serializers import ShortUserSerializer
 from .models import Category, Article, Comment, ArticleTag
 from .services import BlogService
-from .addtags import TagListSerializerField,TaggitSerializer
+from .addtags import TagListSerializerField, TaggitSerializer
 
 
 class ArticleTagSerializer(serializers.ModelSerializer):
@@ -100,13 +100,12 @@ class FullArticleSerializer(ArticleSerializer):
 
 
 class CreateArticleSerializer(TaggitSerializer, serializers.ModelSerializer):
+    objects = None
     tags = TagListSerializerField()
 
     class Meta:
         model = Article
         fields = ('title', 'category', 'image', 'content', 'tags')
-
-
 
     def create(self, validated_data):
         validated_data['author'] = self.context.get('request').user

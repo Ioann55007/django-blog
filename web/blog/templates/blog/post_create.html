@@ -48,6 +48,16 @@
         <div class="help">A comma-separated list of tags.</div>
 
      </div>
+  {% if popular_list %}{% load bootstrap3 %}
+<ul class="list-group">
+<li class="list-group-item active"><strong>Популярные публикации за неделю</strong></li>
+{% for pop_article in popular_list %}
+    <li class="list-group-item">
+    <a href="{% url 'post:article' pop_article.article_id %}">{{ pop_tag.tag__title }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
 
 </div>
 
