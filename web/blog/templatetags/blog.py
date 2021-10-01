@@ -19,5 +19,6 @@ def categories_list(limit: int = 99):
 
 @register.simple_tag()
 def popular_tags_list():
+
     tags = ArticleTag.objects.annotate(num_tags=Count('tagged_article')).order_by('-num_tags')[0:8]
     return tags
