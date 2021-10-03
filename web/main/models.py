@@ -33,17 +33,17 @@ class User(AbstractUser):
         return self.emailaddress_set.get(primary=True).verified
     email_verified.boolean = True
 
-    def user_likes(self) -> int:
-        return self.likes.all().count()
+    # def user_likes(self) -> int:
+    #     return self.likes.all().count()
 
     def user_posts(self) -> int:
         return self.article_set.filter(status=ArticleStatus.ACTIVE).count()
 
-    def followers_count(self) -> int:
-        return self.followers.count()
-
-    def following_count(self) -> int:
-        return self.following.count()
+    # def followers_count(self) -> int:
+    #     return self.followers.count()
+    #
+    # def following_count(self) -> int:
+    #     return self.following.count()
 
     def get_absolute_url(self):
         return reverse_lazy('user_profile:user_by_id', args=(self.id,))

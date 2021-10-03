@@ -75,11 +75,11 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('blog:post-detail', kwargs={'slug': self.slug})
 
-    def likes(self) -> int:
-        return self.votes.likes().count()
-
-    def dislikes(self) -> int:
-        return self.votes.dislikes().count()
+    # def likes(self) -> int:
+    #     return self.votes.likes().count()
+    #
+    # def dislikes(self) -> int:
+    #     return self.votes.dislikes().count()
 
     def tag_list(self) -> str:
         return u", ".join(o.name for o in self.tags.all())

@@ -4,27 +4,19 @@
   <h4><i class="fa fa-tags"></i> Popular Tags:</h4>
   <div class="row">
     <div class="col-lg-6">
-<!--      <ul class="list-unstyled">-->
-
-<!--        <li><a href=""><span class="badge badge-info"></span></a></li>-->
-<!--       {% for tag in article.tags %}-->
-<!--        {{ tag.name }}-->
-<!--      {% endfor %}-->
-<!--      </ul>-->
-<!--      <ul class="links">-->
 
         {% for tag in popular_tags_list %}
     <div>
       <div style="float: left; width: 39%;">
       <div style="float: right; width: 19%;">
-        <li><a href="#">{{ tag }}</a></li>
+        <a href="#">{{ tag }}</a>
       </div>
       </div>
 
     </div>
         {% endfor %}
 
-<!--</ul>-->
+
     </div>
   </div>
 </div>

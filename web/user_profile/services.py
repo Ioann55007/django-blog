@@ -11,10 +11,10 @@ class UserProfileService:
     @staticmethod
     def get_user_profile(user_id: int):
         user_articles = Count('article_set', filter=Q(article_set__status=ArticleStatus.ACTIVE))
-        user_likes = Count('likes')
+        # user_likes = Count('likes')
         return (
             User.objects.select_related('profile')
-            .annotate(user_posts=user_articles, user_likes=user_likes)
+            .annotate(user_posts=user_articles)
             .get(id=user_id)
         )
 
