@@ -10,8 +10,3 @@ class ListFollowerSerializer(serializers.ModelSerializer):
         model = Follower
         fields = ('subscriber',)
 
-
-class AddFollowerSerializer(serializers.Serializer):
-    """Добавление в подписчики"""
-
-

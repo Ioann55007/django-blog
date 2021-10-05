@@ -3,6 +3,7 @@ from .models import Follower
 from .serializers import ListFollowerSerializer
 from main.models import User
 
+
 class ListFollowerView(generics.ListAPIView):
     """Вывод списка подписчиков пользователя"""
 
