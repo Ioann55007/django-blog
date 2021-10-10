@@ -1,3 +1,4 @@
+{% load blog %}
 <div class="col-lg-4">
 
   {% if user.is_authenticated %}
@@ -7,7 +8,8 @@
     {% include 'blog/includes/sidebar_blocks/search_panel.html' %}
     {% include 'blog/includes/sidebar_blocks/popular_tags.html' %}
     {% include 'blog/includes/sidebar_blocks/follow_me.html' %}
-    {% include 'blog/includes/sidebar_blocks/popular_posts.html' %}
+<!--    {% include 'blog/includes/sidebar_blocks/popular_posts.html' %}-->
+    {% popular_posts_list %}
     {% include 'blog/includes/sidebar_blocks/featured_books.html' %}
 
 </div>

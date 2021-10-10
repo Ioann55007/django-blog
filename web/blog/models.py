@@ -43,6 +43,7 @@ class Category(models.Model):
 
 
 class Article(models.Model):
+
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='article_set')
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, allow_unicode=True, unique=True)
