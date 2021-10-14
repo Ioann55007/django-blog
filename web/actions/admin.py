@@ -5,4 +5,3 @@ from .models import Follower
 @admin.register(Follower)
 class FollowerAdmin(admin.ModelAdmin):
     list_display = ('subscriber', 'to_user')
-

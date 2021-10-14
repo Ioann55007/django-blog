@@ -68,3 +68,5 @@ django-countries==7.1
 # PhoneNumberField
 django-phonenumber-field==5.1.0
 phonenumberslite==8.12.22
+
+django-redis==5.0.0
