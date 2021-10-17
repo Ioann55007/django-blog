@@ -1,4 +1,4 @@
-from rest_framework import serializers, response
+from rest_framework import serializers, response, request
 from .models import Follower, User
 from user_profile.serializers import UserByFollowerSerializer
 
@@ -35,14 +35,8 @@ class CreateSubscriptionSerializer(serializers.Serializer):
 
         if Follower.objects.filter(subscriber=subscriber, to_user_id=to_user).exists():
             """Пользователь уже подписан, нужно удалить подписку"""
-            pass
+            return Follower.objects.filter('user_id').delete()
 
         else:
             """Пользователь не подписан, подписать"""
-
-
-
-
-
-
-
+            return Follower.objects.create(user=request.user)
