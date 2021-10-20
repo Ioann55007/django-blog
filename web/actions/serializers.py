@@ -39,4 +39,7 @@ class CreateSubscriptionSerializer(serializers.Serializer):
 
         else:
             """Пользователь не подписан, подписать"""
-            return Follower.objects.create(user=request.user)
+            return Follower.objects.create(
+                subscriber=subscriber,
+                to_user_id=to_user)
+

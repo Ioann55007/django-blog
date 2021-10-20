@@ -39,30 +39,47 @@ def popular_tags_list():
     return tags
 
 
-# return {"posts": articles}
-# articles = Article.objects.order_by('-title')[:cnt]
-
-def current_key():
-    return datetime.now().strftime('%H:%M')
-
-
-def set_to_key(user_id):
-    if request.user.is_authenticated():
-        key = current_key()
-        get_redis_connection("default").sadd(key, user_id)
-
-
-def get_online():
-    now = datetime.now()
-    interval = [now - timedelta(minutes=x) for x in range(100)]
-    interval = [i.strftime('%H:%M') for i in interval]
-    try:
-        online = len(get_redis_connection("default").sunion(interval))
-    except:
-        online = 1
-    return int(online)
+#
+# @register.inclusion_tag('blog/includes/sidebar_blocks/popular_posts.html')
+# def popular_posts_list(cnt=7):
+#     articles = Article.objects.order_by('-title')[:cnt]
+#
+#     def current_key():
+#         return datetime.now().strftime('%H:%M')
+#
+#     def set_to_key(user_id):
+#         if request.user.is_authenticated():
+#            key = current_key()
+#            get_redis_connection("default").sadd(key, user_id)
+#
+#     def get_online():
+#         now = datetime.now()
+#         interval = [now - timedelta(minutes=x) for x in range(100)]
+#         interval = [i.strftime('%H:%M') for i in interval]
+#         try:
+#             online = len(get_redis_connection("default").sunion(interval))
+#         except:
+#             online = 1
+#         return int(online)
+#
+#     return {"posts": articles}
 
 
 @register.inclusion_tag('blog/includes/sidebar_blocks/popular_posts.html')
 def popular_posts_list(cnt=7):
-    pass
+    articles = Article.objects.order_by('-title')[:cnt]
+    current_key = datetime.now().strftime('%H:%M')
+
+    def gt(user_id):
+        if request.user.is_authenticated():
+            key = current_key
+            get_redis_connection("default").sadd(key, user_id)
+            now = datetime.now()
+            interval = [now - timedelta(minutes=x) for x in range(100)]
+            interval = [i.strftime('%H:%M') for i in interval]
+            try:
+                online = len(get_redis_connection("default").sunion(interval))
+            except:
+                online = 1
+            return int(online)
+    return {"posts": articles}
