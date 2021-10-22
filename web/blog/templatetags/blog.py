@@ -82,4 +82,5 @@ def popular_posts_list(cnt=7):
             except:
                 online = 1
             return int(online)
+        gt()
     return {"posts": articles}

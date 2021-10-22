@@ -35,8 +35,8 @@ class CreateSubscriptionSerializer(serializers.Serializer):
 
         if Follower.objects.filter(subscriber=subscriber, to_user_id=to_user).exists():
             """Пользователь уже подписан, нужно удалить подписку"""
-            return Follower.objects.filter('user_id').delete()
-
+            return Follower.objects.filter(
+                to_user_id=to_user).delete()
         else:
             """Пользователь не подписан, подписать"""
             return Follower.objects.create(
