@@ -12,8 +12,8 @@
               <img src="{{ user.avatar }}" alt="Avatar" class="pull-left span2 clearfix avatar img-circle img-thumbnail" width="120px"
                    style='margin-right:10px'>
               <div class="caption" class="pull-left">
-                <a href="" method="post" data-href="" data-id="{{ user.id }}"
-                   class="btn  btn-danger icon   style='color:'#DC143C'  pull-right followMe"  data-toggle="collapse" data-target="#services" id="show"><span>Подписаться</span></a>
+                <button  data-href="{% url 'actions:subscriber_to_user' %}" data-id="{{ user.id }}"
+                   class="btn  btn-danger icon   style='color:'#DC143C'  pull-right followMe"><span>Подписаться</span></button>
 
                 <h4>
                   <a href="{% url 'user_profile:user_by_id' user.id %}">{{ user.full_name }}</a>

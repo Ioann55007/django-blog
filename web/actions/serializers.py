@@ -1,6 +1,7 @@
 from rest_framework import serializers, response, request
 from .models import Follower, User
 from user_profile.serializers import UserByFollowerSerializer
+from .choises import FollowerStatus
 
 
 class ListFollowerSerializer(serializers.ModelSerializer):
