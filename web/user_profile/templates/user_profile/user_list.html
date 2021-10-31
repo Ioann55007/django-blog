@@ -13,7 +13,7 @@
                    style='margin-right:10px'>
               <div class="caption" class="pull-left">
                 <button  data-href="{% url 'actions:subscriber_to_user' %}" data-id="{{ user.id }}"
-                   class="btn  btn-danger icon   style='color:'#DC143C'  pull-right followMe"><span>Подписаться</span></button>
+                   class="btn  btn-danger icon   style='color:'#DC143C'  pull-right followMe"><span>{{ user.follower_status }}</span></button>
 
                 <h4>
                   <a href="{% url 'user_profile:user_by_id' user.id %}">{{ user.full_name }}</a>

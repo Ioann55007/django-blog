@@ -74,7 +74,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         the signup form is not available.
         """
         u = sociallogin.user
-        sociallogin.save(request)
+        sociallogin.save
         return u
 
     def get_app(self, request, provider):
@@ -84,7 +84,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
                 setattr(app, field, config.get(field))
             app.key = app.key or "unset"
             app.name = app.name or provider
-            app.save()
+            app.save
         else:
             app = SocialApp.objects.get_current(provider, request)
         return app

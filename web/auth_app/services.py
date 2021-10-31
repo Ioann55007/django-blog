@@ -75,7 +75,7 @@ class AuthAppService:
     @staticmethod
     def make_user_active(user):
         user.is_active = True
-        user.save(update_fields=['is_active'])
+        user.save
         return user
 
 

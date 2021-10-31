@@ -79,8 +79,9 @@ def popular_posts_list(cnt=7):
             interval = [i.strftime('%H:%M') for i in interval]
             try:
                 online = len(get_redis_connection("default").sunion(interval))
-            except:
+            except Article.DoesNotExist:
                 online = 1
             return int(online)
         gt()
+
     return {"posts": articles}

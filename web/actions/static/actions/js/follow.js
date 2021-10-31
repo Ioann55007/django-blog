@@ -16,6 +16,7 @@ $.ajax({
     dataType: "json",
     data: data,
      success: function (data) {
+     button.text(data.follower_status)
       console.log('success', data)},
      error: function (data) {
       console.log('error', data)}

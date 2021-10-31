@@ -48,12 +48,12 @@ class AuthApiTestCase(APITestCase):
         self.assertEqual(response.json(), {'email': [error_messages['not_verified']]})
         email = self.user.emailaddress_set.get(primary=True)
         email.verified = True
-        email.save()
+        email.save
         response = self.client.post(login_url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST, response.content)
         self.assertEqual(response.json(), {'email': [error_messages['not_active']]})
         self.user.is_active = True
-        self.user.save()
+        self.user.save
         data['password'] = 'wrong_password'
         response = self.client.post(login_url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST, response.content)
