@@ -10,9 +10,6 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import mixins
 from main.pagination import BasePageNumberPagination
 from main.views import TemplateAPIView
-
-from .addtags import TagListSerializerField
-from .models import Article
 from .serializers import CategorySerializer, CreateArticleSerializer
 from .services import BlogService
 from . import serializers

@@ -1,9 +1,8 @@
-from django.db.models import TextChoices, Q
+
 from rest_framework import serializers, response, request
-from .models import Follower, User
 from user_profile.serializers import UserByFollowerSerializer
+from .models import Follower, User
 from .choises import FollowerStatus
-from django.db import models
 
 
 class ListFollowerSerializer(serializers.ModelSerializer):
@@ -57,4 +56,3 @@ class CreateSubscriptionSerializer(serializers.Serializer):
     @property
     def data(self):
         return {'follower_status': self.follower_status}
-

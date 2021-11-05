@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from main.views import TemplateAPIView
 
-from . import views
+from .import views
 
 app_name = 'user_profile'
 

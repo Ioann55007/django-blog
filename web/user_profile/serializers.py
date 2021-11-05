@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from rest_framework import serializers
+from actions.models import Follower
+from actions.choises import FollowerStatus
 from .models import Profile
 from .choices import GenderChoice
 
@@ -67,10 +69,18 @@ class UpdateUserProfileSerializer(serializers.ModelSerializer):
 
 class UserListSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(source='profile.avatar')
+    follower_status = serializers.SerializerMethodField('get_follower_status')
+
+    def get_follower_status(self, obj):
+        current_user = self.context['request'].user
+
+        if Follower.objects.filter(subscriber=current_user, to_user=obj).exists():
+            return FollowerStatus.UNFOLLOW
+        return FollowerStatus.FOLLOW
 
     class Meta:
         model = User
-        fields = ('id', 'full_name', 'avatar')
+        fields = ('id', 'full_name', 'avatar', 'follower_status')
 
 
 class UserByFollowerSerializer(serializers.ModelSerializer):
