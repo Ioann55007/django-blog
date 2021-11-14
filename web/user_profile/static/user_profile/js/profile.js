@@ -3,7 +3,7 @@ $(function () {
   $('#changePasswordForm').submit(changePassword);
   $('#followersButton').click(followersApi)
   $('#followingButton').click(followersApi)
-
+  $('#followersButton').click(fun_prof);
 });
 
 const error_class_name = "has-error"
@@ -110,4 +110,22 @@ function followBodyRender(data, button) {
   })
    $(".followMe").click(followMe);
 
+}
+
+function fun_prof(e){
+  let button = $(this)
+  let data = {
+  'user_id':1
+  }
+  e.preventDefault();
+  $.ajax({
+      url: button.data('user_by_id'),
+      type: form.attr("method"),
+      dataType: "json",
+        data: form.serialize(),
+     success: function (data) {
+      console.log('success', data)},
+     error: function (data) {
+      console.log('error', data)}
+  })
 }

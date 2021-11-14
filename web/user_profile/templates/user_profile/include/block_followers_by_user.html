@@ -8,25 +8,5 @@
             data-href="{% url 'user_profile:profile' %}">
       Following ({{ following_count }})</button>
   </div>
-  <script>
-    $(function () {
-  $('#followersButton').click(fun_prof);
-});
 
-function fun_prof(e){
-  let form = $(this)
-  e.preventDefault();
-  $.ajax({
-      url: form.(data:'user_by_id');
-      type: form.attr("method"),
-      dataType: "json",
-        data: form.serialize(),
-     success: function (data) {
-      console.log('success', data)},
-     error: function (data) {
-      console.log('error', data)}
-  })
-}
-
-  </script>
 </div>
