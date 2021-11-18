@@ -16,7 +16,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
+    following = models.ManyToManyField('self', related_name='followers', symmetrical=False, through='actions.Follower')
     objects = UserManager()
 
     class Meta:

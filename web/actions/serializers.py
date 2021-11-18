@@ -3,6 +3,7 @@ from rest_framework import serializers, response, request
 from user_profile.serializers import UserByFollowerSerializer
 from .models import Follower, User
 from .choises import FollowerStatus
+from main.models import User
 
 
 class ListFollowerSerializer(serializers.ModelSerializer):
@@ -56,3 +57,34 @@ class CreateSubscriptionSerializer(serializers.Serializer):
     @property
     def data(self):
         return {'follower_status': self.follower_status}
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """сериализация юзера"""
+
+    class Meta:
+        model = User
+        fields = ('following',)
+
+
+
+class FollowersSerializer(UserSerializer):
+    """Вывод подписчиков"""
+
+    def get_followers(self):
+        self.display_followers = User.objects.get(pk=1)
+        show_followers = self.display_followers.followers.all()
+        return show_followers
+
+    def get_following(self):
+        show_following = self.display_followers.following.all()
+        return show_following
+
+
+
+
+
+
+
+
+
