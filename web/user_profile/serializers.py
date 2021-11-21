@@ -81,11 +81,3 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'full_name', 'avatar', 'follower_status')
-
-
-class UserByFollowerSerializer(serializers.ModelSerializer):
-    """сериализация подписчиков"""
-
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email')

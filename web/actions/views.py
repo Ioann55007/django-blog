@@ -18,7 +18,7 @@ class ListFollowerViewSet(ViewSet):
         return Follower.objects.filter(users=self.request.user)
 
 
-class FollowerViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, GenericViewSet):
+class FollowerViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, GenericViewSet):
     """Добавление в подписчики"""
     permission_classes = [AllowAny]
     # queryset = Follower.objects.all()
@@ -30,4 +30,22 @@ class FollowerViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.D
             return serializers.ListFollowerSerializer
         elif self.action == 'create':
             return serializers.CreateSubscriptionSerializer
-        return serializers.ToUserSerializer
+        elif self.action == 'user_followers' or self.action == 'user_following':
+            return serializers.UserByFollowerSerializer
+
+    def get_queryset(self):
+        if self.action == 'user_followers':
+            return self.request.user.followers.all()
+        elif self.action == 'user_following':
+            return self.request.user.following.all()
+
+    def user_followers(self, request):
+        return self.list(request)
+
+    def user_following(self, request):
+        return self.list(request)
+
+
+
+
+
