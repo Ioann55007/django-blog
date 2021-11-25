@@ -2,7 +2,7 @@
   <div class="panel-heading">Followers <i class="fa fa-link fa-1x"></i></div>
   <div class="panel-body">
     <button class="btn btn-info" id="followersButton" data-follow-actions="{% url 'user_profile:profile' %}"
-            data-href="{% url 'user_profile:profile' %}" onClick(fun_prof) method="post">
+            data-href="{% url 'user_profile:profile' %}" onClick(fun_prof) method="get">
       Followers ({{ followers_count }})</button>
     <button class="btn btn-info" id="followingButton" data-follow-actions="{% url 'user_profile:profile' %}"
             data-href="{% url 'user_profile:profile' %}">
@@ -10,3 +10,8 @@
   </div>
 
 </div>
+
+{% block jquery %}
+  $.getScript({% static 'actions/js/follow.js' %});
+
+{% endblock %}
