@@ -10,11 +10,13 @@ const error_class_name = "has-error"
 
 
 function followersApi(){
+
   let button = $(this)
    $.ajax({
     type: 'GET',
     url: button.data('href'),
     success: function (data) {
+        console.log(data)
         renderModal(data, button)
         $('#followerModal').modal('show');
     },
@@ -92,6 +94,7 @@ function renderModal(data, button) {
 
 function followBodyRender(data, button) {
   user_list = data.results
+  console.log(user_list, data)
   let body = $('#followModalBody')
   let followUrl = button.data('follow-actions')
 
@@ -108,7 +111,7 @@ function followBodyRender(data, button) {
    `
    body.append(templateString);
   })
-   $(".followMe").click(followMe);
+
 
 }
 
@@ -120,9 +123,9 @@ function fun_prof(e){
   e.preventDefault();
   $.ajax({
       url: button.data('user_by_id'),
-      type: form.attr("method"),
+      type: 'GET',
       dataType: "json",
-        data: form.serialize(),
+      data: data,
      success: function (data) {
       console.log('success', data)},
      error: function (data) {

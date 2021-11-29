@@ -6,7 +6,7 @@ from rest_framework.viewsets import ViewSet, GenericViewSet
 from . import serializers
 from .models import Follower
 from .serializers import ListFollowerSerializer
-
+from main.pagination import BasePageNumberPagination
 
 class ListFollowerViewSet(ViewSet):
     """Вывод списка подписчиков пользователя"""
@@ -20,7 +20,7 @@ class ListFollowerViewSet(ViewSet):
 
 class FollowerViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, GenericViewSet):
     """Добавление в подписчики"""
-    permission_classes = [AllowAny]
+    pagination_class = BasePageNumberPagination
     # queryset = Follower.objects.all()
     http_method_names = ('get', 'post')
     serializer_class = serializers.ToUserSerializer
