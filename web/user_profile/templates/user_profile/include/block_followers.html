@@ -4,10 +4,12 @@
   <div class="panel-body">
     <button class="btn btn-info" id="followersButton" data-follow-actions="#"
             data-href="{% url 'actions:user_followers' %}">
-      Followers ({{ followers_count }})</button>
+      Followers({{ followers_count }})
+
+      </button>
     <button class="btn btn-info" id="followingButton" data-follow-actions="#"
             data-href="{% url 'actions:user_following' %}">
-      Following ({{ following_cofunt }})</button>
+      Following ({{ following_count }})</button>
   </div>
 </div>
 

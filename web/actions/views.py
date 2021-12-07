@@ -44,8 +44,3 @@ class FollowerViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, GenericVie
 
     def user_following(self, request):
         return self.list(request)
-
-
-
-
-
