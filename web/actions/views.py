@@ -8,6 +8,7 @@ from .models import Follower
 from .serializers import ListFollowerSerializer
 from main.pagination import BasePageNumberPagination
 
+
 class ListFollowerViewSet(ViewSet):
     """Вывод списка подписчиков пользователя"""
 

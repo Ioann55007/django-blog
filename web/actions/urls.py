@@ -3,13 +3,9 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
-
-
 app_name = 'actions'
-
 router = DefaultRouter()
 router.register('followers', views.ListFollowerViewSet, basename='followers')
-
 
 urlpatterns = [
     path('followers/<to_user_id>/', views.FollowerViewSet.as_view({'get': 'list'}), name='followers_to_user'),

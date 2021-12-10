@@ -10,6 +10,7 @@ from .managers import UserManager
 
 class User(AbstractUser):
 
+
     username = None
     email = models.EmailField(_('Email address'), unique=True)
     phone_number = PhoneNumberField(null=True, blank=True)
@@ -39,11 +40,11 @@ class User(AbstractUser):
     def user_posts(self) -> int:
         return self.article_set.filter(status=ArticleStatus.ACTIVE).count()
 
-    # def followers_count(self) -> int:
-    #     return self.followers.count()
-    #
-    # def following_count(self) -> int:
-    #     return self.following.count()
+    def followers_count(self) -> int:
+        return self.followers.count()
+
+    def following_count(self) -> int:
+        return self.following.count()
 
     def get_absolute_url(self):
         return reverse_lazy('user_profile:user_by_id', args=(self.id,))

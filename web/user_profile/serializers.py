@@ -20,6 +20,7 @@ class ShortUserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Profile
         fields = ('birthday', 'avatar', 'gender',)
@@ -32,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id', 'full_name', 'first_name', 'last_name', 'email', 'profile', 'is_active', 'email_verified',
-            'phone_number', 'user_posts',
+            'phone_number', 'user_posts','followers_count', 'following_count'
         )
         read_only_fields = ('full_name', 'email_verified', 'user_posts')
 
